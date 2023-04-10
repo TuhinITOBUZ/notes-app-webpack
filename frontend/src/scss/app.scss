@@ -1,0 +1,300 @@
+/* By Athlon Front-End Team */
+
+/* Core variables */
+@import 'base/vars';
+
+/* CSS Reset */
+@import 'base/reset';
+
+/* CSS print */
+@import 'base/print';
+
+/* Fonts */
+@import 'base/fonts';
+
+/* Mixins, helpers and functions */
+@import 'base/mixins';
+
+/* Vendor */
+
+/* Components */
+
+/* Browser specific styles */
+@import 'dirty/hacks';
+
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #fefae0;
+}
+
+.width-85 {
+  width: 85%;
+}
+
+.notes-heading {
+  text-shadow: 2px 2px 6px rgba(128, 96, 21, 1);
+}
+
+.create-button {
+  z-index: 1;
+  right: .2rem;
+  bottom: 2rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.create-button>i:hover {
+  transition: all .3s ease-in-out;
+  transform: rotate(90deg);
+}
+
+.close-button {
+  cursor: pointer;
+}
+
+.close-button:hover {
+  scale: 1.1;
+}
+
+.notes-body {
+  display: flex;
+}
+
+.create-task,
+.update-task,
+.view-task {
+  display: none;
+  z-index: 1;
+  width: 100%;
+  min-height: 90vh;
+  top: 10vh;
+  border-radius: 30px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  backdrop-filter: blur(20px);
+}
+
+.create-task>form>div>input,
+.update-task>form>div>input {
+  border: 1px salmon double;
+  border-radius: 10px;
+  font-size: large;
+  padding: 1rem;
+}
+
+.create-task>form>div>textarea,
+.update-task>form>div>textarea {
+  min-height: 50vh;
+  border: 1px salmon double;
+  border-radius: 10px;
+  font-size: small;
+  padding: 1rem;
+}
+
+.create-task>form button,
+.update-task>form button,
+.create-task button,
+.update-task button {
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 12px 24px;
+  border: 0;
+  color: #000021;
+  background: #d4a373;
+  line-height: 1.15;
+  font-size: 20px;
+}
+
+.create-task>form button:hover,
+.update-task>form button:hover,
+.create-task button:hover,
+.update-task button:hover {
+  transition: all .2s ease;
+  background: #ccd5ae;
+  scale: 1.1;
+}
+
+.task {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 1rem;
+  min-width: 15rem;
+  min-height: 7rem;
+  transition: all .3s ease-in-out;
+}
+
+.task>h2 {
+  font-family: 'Roboto', sans-serif;
+}
+
+.task>p {
+  max-height: 40vh;
+  max-width: 15rem;
+  overflow: auto;
+  text-align: justify;
+  font-family: 'Crimson Text', serif;
+
+}
+
+.task:hover {
+  opacity: 1;
+  box-shadow: inset 200px 0 0 0 #54b3d6;
+  cursor: pointer;
+  border: none;
+}
+
+.task-list:hover>.task:not(:hover) {
+  opacity: .5;
+}
+
+.delete-button:hover,
+.edit-button:hover,
+.view-button:hover {
+  scale: 1.3;
+}
+
+.task-list {
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.add-note-toast-message,
+.update-note-toast-message,
+.delete-note-toast-message {
+  display: none;
+  z-index: 1;
+  background-color: #00f5d4;
+  width: 70vw;
+  position: absolute;
+  left: 25%;
+  top: 1.5rem;
+  transition: all .3s ease-in-out;
+  border-left: 10px solid #00bbf9;
+  border-bottom: 2px solid #00bbf9;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+  cursor: pointer;
+  animation: slideIn 1s ease-in;
+}
+
+@keyframes slideIn {
+  0% {
+    left: 100%;
+  }
+
+  100% {
+    left: 25%;
+  }
+}
+
+.add-note-toast-message>p,
+.update-note-toast-message>p,
+.delete-note-toast-message>p {
+  padding: .75rem 0 0 0;
+}
+
+.check-box {
+  backdrop-filter: blur(10px);
+  display: none;
+  cursor: pointer;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.check-box button {
+  padding: 1rem;
+  border: none;
+}
+
+.check-box button:hover {
+  transition: all .1s ease-in-out;
+  background-color: #ccd5ae;
+  scale: 1.1;
+  border-radius: 10px;
+}
+
+.create-button-load-effect {
+  transform-origin: 50% 50%;
+  animation: shake 1s ease;
+}
+
+@keyframes shake {
+  30% {
+    transform: scale(1.2);
+  }
+
+  40%,
+  60% {
+    transform: rotate(-20deg) scale(1.2);
+  }
+
+  50% {
+    transform: rotate(20deg) scale(1.2);
+  }
+
+  70% {
+    transform: rotate(0deg) scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.last-updated-on {
+  font-size: 10px;
+  color: #686868;
+}
+
+@media screen and (min-width:375px) {
+  .task {
+    min-width: 17rem;
+  }
+}
+
+@media screen and (min-width:900px) {
+
+  .add-note-toast-message,
+  .update-note-toast-message,
+  .delete-note-toast-message {
+    left: 70%;
+    width: 20vw;
+    animation: slideIn 1s ease-in;
+  }
+
+  @keyframes slideIn {
+    0% {
+      left: 100%;
+    }
+
+    100% {
+      left: 70%;
+    }
+  }
+
+  .create-button {
+    right: 1rem;
+  }
+
+  .task>p {
+    max-height: 15vh;
+    overflow: auto;
+    text-align: justify;
+    font-size: 1.3rem;
+  }
+
+  .create-task,
+  .update-task {
+    width: 80%;
+    min-height: 70vh;
+  }
+
+  .last-updated-on {
+    font-size: 14px !important;
+  }
+}
