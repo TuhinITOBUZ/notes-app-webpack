@@ -6,7 +6,11 @@ export const app = express();
 //add data to the collection
 app.post("/add_task", async (request, response, next) => {
   try {
-    const task = new taskModel(request.body);
+    const task = new taskModel({
+      heading: request.body.heading,
+      details: request.body.details,
+      date: new Date().toLocaleString(),
+    });
     await task.save();
     response.send({
       data: task,
@@ -22,14 +26,18 @@ app.post("/add_task", async (request, response, next) => {
 //update data
 app.put("/modify_task", async (request, response, next) => {
   try {
-    const task = new taskModel(request.body);
+    const task = new taskModel({
+      heading: request.body.heading,
+      details: request.body.details,
+      date: new Date().toLocaleString(),
+    });
     await taskModel.findOneAndUpdate(
       { _id: request.body._id },
       {
         $set: {
           heading: request.body.heading,
           details: request.body.details,
-          date: request.body.date,
+          date: new Date().toLocaleString(),
         }
       }
     )

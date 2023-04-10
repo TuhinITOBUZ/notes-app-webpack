@@ -17,8 +17,8 @@ const notesCount = document.getElementById("notesSubHeading");
 const clearButtons = document.querySelectorAll(".clear-note-button");
 const checkBox = document.getElementById("checkBox")
 const checkBoxButtons = document.querySelectorAll(".check-box-button");
-let updateId = ""
-let deleteId = ""
+let updateId = "";
+let deleteId = "";
 
 closeBtns.forEach(button => {
   button.addEventListener("click", () => {
@@ -120,7 +120,6 @@ async function handleOnSubmitCreate(event) {
     const bodyDetails = {
       heading: taskHeading.value,
       details: taskDetails.value,
-      date: new Date().toLocaleString(),
     }
     await performBackendOperation("add_task", "POST", bodyDetails).then(() => {
       taskDetails.value = null;
@@ -142,7 +141,6 @@ async function handleOnSubmitUpdate(event) {
       _id: updateId,
       heading: updateTaskHeading.value,
       details: updateTaskDetails.value,
-      date: new Date().toLocaleString(),
     }
     await performBackendOperation("modify_task", "PUT", bodyDetails).then(() => {
       updateNoteToastMessage.style.display = "flex"
