@@ -93,12 +93,9 @@ function viewTask(heading, details) {
 async function performBackendOperation(path, method, bodyDetails) {
   let url = `http://localhost:3000/${path}`
   if (method === "GET") {
-    const response = await fetch(url).then(function (res) {
+    return await fetch(url).then(function (res) {
       return res.json()
-    }).catch((err) => {
-      console.log(err);
-    });
-    return response
+    })
   }
   else {
     const response = await fetch(url, {
@@ -163,10 +160,7 @@ async function handleOnSubmitUpdate(event) {
 
 async function getTasks() {
   const response = await performBackendOperation("tasks", "GET", {})
-  if (response.error) {
-    console.log(response.error.message);
-  }
-  else {
+  if (!response.error) {
     if (response.data.length > 0) {
       notesCount.display = "block"
       notesCount.innerHTML = `${response.data.length} Notes`
