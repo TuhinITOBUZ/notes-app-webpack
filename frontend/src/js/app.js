@@ -17,6 +17,9 @@ const notesCount = document.getElementById("notesSubHeading");
 const clearButtons = document.querySelectorAll(".clear-note-button");
 const checkBox = document.getElementById("checkBox")
 const checkBoxButtons = document.querySelectorAll(".check-box-button");
+const seeTask = document.getElementById("viewTask");
+const seeTaskHeading = document.getElementById("viewTaskHeading");
+const seeTaskDeatils = document.getElementById("viewTaskDetails");
 let updateId = "";
 let deleteId = "";
 
@@ -42,10 +45,11 @@ function setTaskBackgroundColor() {
 
 function createTask() {
   createTaskDiv.style.display = "flex"
+  taskDetails.focus();
 }
 
 function closeView() {
-  document.getElementById("viewTask").style.display = "none"
+  seeTask.style.display = "none"
 }
 
 function closeCreateForm() {
@@ -81,13 +85,14 @@ async function editTask(id, heading, details) {
   updateTaskDiv.style.display = "flex"
   updateTaskHeading.value = heading;
   updateTaskDetails.value = details;
+  updateTaskHeading.focus()
   updateId = id
 }
 
 function viewTask(heading, details) {
-  document.getElementById("viewTask").style.display = "flex"
-  document.getElementById("viewTaskHeading").innerHTML = heading
-  document.getElementById("viewTaskDetails").innerHTML = details
+  seeTask.style.display = "flex"
+  seeTaskHeading.innerHTML = heading
+  seeTaskDeatils.innerHTML = details
 }
 
 async function performBackendOperation(path, method, bodyDetails) {
