@@ -1,29 +1,29 @@
 /* By Athlon Front-End Team */
 
 /* Core variables */
-@import 'base/vars';
+@import "base/vars";
 
 /* CSS Reset */
-@import 'base/reset';
+@import "base/reset";
 
 /* CSS print */
-@import 'base/print';
+@import "base/print";
 
 /* Fonts */
-@import 'base/fonts';
+@import "base/fonts";
 
 /* Mixins, helpers and functions */
-@import 'base/mixins';
+@import "base/mixins";
 
 /* Vendor */
 
 /* Components */
 
 /* Browser specific styles */
-@import 'dirty/hacks';
+@import "dirty/hacks";
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 
 body {
   padding: 0;
@@ -43,14 +43,14 @@ body {
 
 .create-button {
   z-index: 1;
-  right: .2rem;
+  right: 0.2rem;
   bottom: 2rem;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.create-button>i:hover {
-  transition: all .3s ease-in-out;
+.create-button > i:hover {
+  transition: all 0.3s ease-in-out;
   transform: rotate(90deg);
 }
 
@@ -75,20 +75,21 @@ body {
   min-height: 90vh;
   top: 10vh;
   border-radius: 30px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   backdrop-filter: blur(20px);
 }
 
-.create-task>form>div>input,
-.update-task>form>div>input {
+.create-task > form > div > input,
+.update-task > form > div > input {
   border: 1px salmon double;
   border-radius: 10px;
   font-size: large;
   padding: 1rem;
 }
 
-.create-task>form>div>textarea,
-.update-task>form>div>textarea {
+.create-task > form > div > textarea,
+.update-task > form > div > textarea {
   min-height: 50vh;
   border: 1px salmon double;
   border-radius: 10px;
@@ -96,8 +97,8 @@ body {
   padding: 1rem;
 }
 
-.create-task>form button,
-.update-task>form button,
+.create-task > form button,
+.update-task > form button,
 .create-task button,
 .update-task button {
   outline: none;
@@ -112,11 +113,11 @@ body {
   font-size: 20px;
 }
 
-.create-task>form button:hover,
-.update-task>form button:hover,
+.create-task > form button:hover,
+.update-task > form button:hover,
 .create-task button:hover,
 .update-task button:hover {
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   background: #ccd5ae;
   scale: 1.1;
 }
@@ -127,20 +128,19 @@ body {
   padding: 1rem;
   min-width: 15rem;
   min-height: 7rem;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.task>h2 {
-  font-family: 'Roboto', sans-serif;
+.task > h2 {
+  font-family: "Roboto", sans-serif;
 }
 
-.task>p {
+.task > p {
   max-height: 40vh;
   max-width: 15rem;
   overflow: auto;
   text-align: justify;
-  font-family: 'Crimson Text', serif;
-
+  font-family: "Crimson Text", serif;
 }
 
 .task:hover {
@@ -150,8 +150,8 @@ body {
   border: none;
 }
 
-.task-list:hover>.task:not(:hover) {
-  opacity: .5;
+.task-list:hover > .task:not(:hover) {
+  opacity: 0.5;
 }
 
 .delete-button:hover,
@@ -175,7 +175,7 @@ body {
   position: absolute;
   left: 25%;
   top: 1.5rem;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   border-left: 10px solid #00bbf9;
   border-bottom: 2px solid #00bbf9;
   border-radius: 10px;
@@ -194,10 +194,10 @@ body {
   }
 }
 
-.add-note-toast-message>p,
-.update-note-toast-message>p,
-.delete-note-toast-message>p {
-  padding: .75rem 0 0 0;
+.add-note-toast-message > p,
+.update-note-toast-message > p,
+.delete-note-toast-message > p {
+  padding: 0.75rem 0 0 0;
 }
 
 .check-box {
@@ -215,7 +215,7 @@ body {
 }
 
 .check-box button:hover {
-  transition: all .1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   background-color: #ccd5ae;
   scale: 1.1;
   border-radius: 10px;
@@ -254,14 +254,13 @@ body {
   color: #686868;
 }
 
-@media screen and (min-width:375px) {
+@media screen and (min-width: 375px) {
   .task {
     min-width: 17rem;
   }
 }
 
-@media screen and (min-width:900px) {
-
+@media screen and (min-width: 900px) {
   .add-note-toast-message,
   .update-note-toast-message,
   .delete-note-toast-message {
@@ -284,7 +283,7 @@ body {
     right: 1rem;
   }
 
-  .task>p {
+  .task > p {
     max-height: 15vh;
     overflow: auto;
     text-align: justify;

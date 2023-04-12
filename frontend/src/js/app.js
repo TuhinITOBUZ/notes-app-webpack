@@ -1,4 +1,4 @@
-import '../scss/app.scss';
+import "../scss/app.scss";
 import "bootstrap/scss/bootstrap.scss";
 
 const taskDetails = document.getElementById("taskDetails");
@@ -8,14 +8,18 @@ const updateTaskHeading = document.getElementById("updateTaskHeading");
 const taskList = document.getElementById("taskList");
 const createTaskDiv = document.getElementById("createTask");
 const updateTaskDiv = document.getElementById("updateTask");
-const addNoteToastMessage = document.getElementById("addNoteToastMessage")
-const updateNoteToastMessage = document.getElementById("updateNoteToastMessage")
-const deleteNoteToastMessage = document.getElementById("deleteNoteToastMessage")
-const colorArray = ['#ccd5ae', '#e9edc9', '#faedcd', '#d4a373'];
+const addNoteToastMessage = document.getElementById("addNoteToastMessage");
+const updateNoteToastMessage = document.getElementById(
+  "updateNoteToastMessage"
+);
+const deleteNoteToastMessage = document.getElementById(
+  "deleteNoteToastMessage"
+);
+const colorArray = ["#ccd5ae", "#e9edc9", "#faedcd", "#d4a373"];
 const closeBtns = document.querySelectorAll(".close");
 const notesCount = document.getElementById("notesSubHeading");
 const clearButtons = document.querySelectorAll(".clear-note-button");
-const checkBox = document.getElementById("checkBox")
+const checkBox = document.getElementById("checkBox");
 const checkBoxButtons = document.querySelectorAll(".check-box-button");
 const seeTask = document.getElementById("viewTask");
 const seeTaskHeading = document.getElementById("viewTaskHeading");
@@ -23,119 +27,123 @@ const seeTaskDeatils = document.getElementById("viewTaskDetails");
 let updateId = "";
 let deleteId = "";
 
-closeBtns.forEach(button => {
+closeBtns.forEach((button) => {
   button.addEventListener("click", () => {
-    addNoteToastMessage.style.display = "none"
-    updateNoteToastMessage.style.display = "none"
-    deleteNoteToastMessage.style.display = "none"
-  })
-})
+    addNoteToastMessage.style.display = "none";
+    updateNoteToastMessage.style.display = "none";
+    deleteNoteToastMessage.style.display = "none";
+  });
+});
 
-clearButtons.forEach(button => {
+clearButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    updateTaskHeading.value = taskHeading.value = updateTaskDetails.value = taskDetails.value = "";
-  })
-})
+    updateTaskHeading.value =
+      taskHeading.value =
+      updateTaskDetails.value =
+      taskDetails.value =
+        "";
+  });
+});
 
 function setTaskBackgroundColor() {
   document.querySelectorAll(".task").forEach((task, index) => {
-    task.style.backgroundColor = colorArray[index % 4]
-  })
+    task.style.backgroundColor = colorArray[index % 4];
+  });
 }
 
 function createTask() {
-  createTaskDiv.style.display = "flex"
+  createTaskDiv.style.display = "flex";
   taskDetails.focus();
 }
 
 function closeView() {
-  seeTask.style.display = "none"
+  seeTask.style.display = "none";
 }
 
 function closeCreateForm() {
-  createTaskDiv.style.display = "none"
+  createTaskDiv.style.display = "none";
   taskHeading.value = "";
   taskDetails.value = "";
 }
 
 function closeUpdateForm() {
-  updateTaskDiv.style.display = "none"
+  updateTaskDiv.style.display = "none";
   updateTaskHeading.value = "";
   updateTaskDetails.value = "";
 }
 
 function confirmDeleteTask(id) {
-  deleteId = id
-  checkBox.style.display = "flex"
+  deleteId = id;
+  checkBox.style.display = "flex";
 }
 
-checkBoxButtons.forEach(button => {
+checkBoxButtons.forEach((button) => {
   button.addEventListener("click", () => {
     if (button.value === "YES") {
-      deleteTask(deleteId)
+      deleteTask(deleteId);
+    } else if (button.value === "NO") {
+      deleteId = "";
+      checkBox.style.display = "none";
     }
-    else if (button.value === "NO") {
-      deleteId = ""
-      checkBox.style.display = "none"
-    }
-  })
-})
+  });
+});
 
 async function editTask(id, heading, details) {
-  updateTaskDiv.style.display = "flex"
+  updateTaskDiv.style.display = "flex";
   updateTaskHeading.value = heading;
   updateTaskDetails.value = details;
-  updateTaskHeading.focus()
-  updateId = id
+  updateTaskHeading.focus();
+  updateId = id;
 }
 
 function viewTask(heading, details) {
-  seeTask.style.display = "flex"
-  seeTaskHeading.innerHTML = heading
-  seeTaskDeatils.innerHTML = details
+  seeTask.style.display = "flex";
+  seeTaskHeading.innerHTML = heading;
+  seeTaskDeatils.innerHTML = details;
 }
 
 async function performBackendOperation(path, method, bodyDetails) {
-  let url = `http://localhost:3000/${path}`
+  let url = `http://localhost:3000/${path}`;
   if (method === "GET") {
     return await fetch(url).then(function (res) {
-      return res.json()
-    })
-  }
-  else {
+      return res.json();
+    });
+  } else {
     const response = await fetch(url, {
       method: method,
-      mode: 'cors',
+      mode: "cors",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-      body: JSON.stringify(bodyDetails)
-    }).then(function (res) {
-      return res.json()
-    }).catch((err) => {
-      console.log(err);
-    });
-    return response
+      body: JSON.stringify(bodyDetails),
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return response;
   }
 }
 
 async function handleOnSubmitCreate(event) {
-  event.preventDefault()
+  event.preventDefault();
   if (taskHeading.value != "" && taskDetails.value != "") {
     const bodyDetails = {
       heading: taskHeading.value,
       details: taskDetails.value,
-    }
+    };
     await performBackendOperation("add_task", "POST", bodyDetails).then(() => {
       taskDetails.value = null;
       taskHeading.value = null;
-      createTaskDiv.style.display = "none"
-      addNoteToastMessage.style.display = "flex"
+      createTaskDiv.style.display = "none";
+      addNoteToastMessage.style.display = "flex";
       setTimeout(() => {
-        addNoteToastMessage.style.display = "none"
-      }, 3000)
-      getTasks()
-    })
+        addNoteToastMessage.style.display = "none";
+      }, 3000);
+      getTasks();
+    });
   }
 }
 
@@ -146,33 +154,33 @@ async function handleOnSubmitUpdate(event) {
       _id: updateId,
       heading: updateTaskHeading.value,
       details: updateTaskDetails.value,
-    }
-    await performBackendOperation("modify_task", "PUT", bodyDetails).then(() => {
-      updateNoteToastMessage.style.display = "flex"
-      setTimeout(() => {
-        updateNoteToastMessage.style.display = "none"
-      }, 3000)
-    })
-    updateTaskDiv.style.display = "none"
-    getTasks()
-  }
-  else {
-    alert("Heading or details is missing")
+    };
+    await performBackendOperation("modify_task", "PUT", bodyDetails).then(
+      () => {
+        updateNoteToastMessage.style.display = "flex";
+        setTimeout(() => {
+          updateNoteToastMessage.style.display = "none";
+        }, 3000);
+      }
+    );
+    updateTaskDiv.style.display = "none";
+    getTasks();
+  } else {
+    alert("Heading or details is missing");
   }
 }
 
 async function getTasks() {
-  const response = await performBackendOperation("tasks", "GET", {})
+  const response = await performBackendOperation("tasks", "GET", {});
   if (!response.error) {
     if (response.data.length > 0) {
-      notesCount.display = "block"
-      notesCount.innerHTML = `${response.data.length} Notes`
+      notesCount.display = "block";
+      notesCount.innerHTML = `${response.data.length} Notes`;
+    } else {
+      notesCount.display = "none";
+      notesCount.innerHTML = "";
     }
-    else {
-      notesCount.display = "none"
-      notesCount.innerHTML = ""
-    }
-    taskList.innerHTML = ""
+    taskList.innerHTML = "";
     for (let i = 0; i < response.data.length; i++) {
       let task = `
       <div class="task p-2 position-relative">
@@ -186,24 +194,26 @@ async function getTasks() {
       <hr>
       <p class="last-updated-on">Updated on :${response.data[i].date}</p>
       </div>
-      `
-      taskList.innerHTML += task
+      `;
+      taskList.innerHTML += task;
     }
-    setTaskBackgroundColor()
+    setTaskBackgroundColor();
   }
 }
-getTasks()
+getTasks();
 
 async function deleteTask(id) {
-  checkBox.style.display = "none"
-  const bodyDetails = { _id: id }
-  await performBackendOperation("delete_task", "DELETE", bodyDetails).then(() => {
-    deleteNoteToastMessage.style.display = "flex"
-    setTimeout(() => {
-      deleteNoteToastMessage.style.display = "none"
-    }, 3000)
-  })
-  getTasks()
+  checkBox.style.display = "none";
+  const bodyDetails = { _id: id };
+  await performBackendOperation("delete_task", "DELETE", bodyDetails).then(
+    () => {
+      deleteNoteToastMessage.style.display = "flex";
+      setTimeout(() => {
+        deleteNoteToastMessage.style.display = "none";
+      }, 3000);
+    }
+  );
+  getTasks();
 }
 
 window.viewTask = viewTask;
