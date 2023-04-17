@@ -3,17 +3,16 @@ import mongoose from "mongoose";
 const taskSchema = new mongoose.Schema({
   heading: {
     type: String,
-    require: true,
-
+    required: true,
   },
   details: {
     type: String,
-    require: true,
+    required: true,
   },
   date: {
     type: String,
-    require: true,
+    required: true,
   },
 });
 
-export const taskModel = mongoose.model("task", taskSchema);
+export const noteModel = mongoose.model("task", taskSchema);

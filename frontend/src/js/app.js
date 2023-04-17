@@ -3,45 +3,28 @@ import "bootstrap/scss/bootstrap.scss";
 
 const taskDetails = document.getElementById("taskDetails");
 const taskHeading = document.getElementById("taskHeading");
-const updateTaskDetails = document.getElementById("updateTaskDetails");
-const updateTaskHeading = document.getElementById("updateTaskHeading");
 const taskList = document.getElementById("taskList");
 const createTaskDiv = document.getElementById("createTask");
-const updateTaskDiv = document.getElementById("updateTask");
-const addNoteToastMessage = document.getElementById("addNoteToastMessage");
-const updateNoteToastMessage = document.getElementById(
-  "updateNoteToastMessage"
-);
-const deleteNoteToastMessage = document.getElementById(
-  "deleteNoteToastMessage"
-);
 const colorArray = ["#ccd5ae", "#e9edc9", "#faedcd", "#d4a373"];
-const closeBtns = document.querySelectorAll(".close");
 const notesCount = document.getElementById("notesSubHeading");
 const clearButtons = document.querySelectorAll(".clear-note-button");
 const checkBox = document.getElementById("checkBox");
-const checkBoxButtons = document.querySelectorAll(".check-box-button");
 const seeTask = document.getElementById("viewTask");
 const seeTaskHeading = document.getElementById("viewTaskHeading");
 const seeTaskDeatils = document.getElementById("viewTaskDetails");
+const closeToastMessage = document.querySelector(".close");
+const toastMessage = document.getElementById("toastMessage");
+const toastMessageText = document.getElementById("toastMessageText");
 let updateId = "";
 let deleteId = "";
 
-closeBtns.forEach((button) => {
-  button.addEventListener("click", () => {
-    addNoteToastMessage.style.display = "none";
-    updateNoteToastMessage.style.display = "none";
-    deleteNoteToastMessage.style.display = "none";
-  });
+closeToastMessage.addEventListener("click", () => {
+  toastMessage.style.display = "none";
 });
 
 clearButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    updateTaskHeading.value =
-      taskHeading.value =
-      updateTaskDetails.value =
-      taskDetails.value =
-        "";
+    taskHeading.value = taskDetails.value = "";
   });
 });
 
@@ -53,10 +36,11 @@ function setTaskBackgroundColor() {
 
 function createTask() {
   createTaskDiv.style.display = "flex";
+  document.getElementById("addNoteButton").innerHTML = "Save";
   taskDetails.focus();
 }
 
-function closeView() {
+function closeNoteView() {
   seeTask.style.display = "none";
 }
 
@@ -66,33 +50,25 @@ function closeCreateForm() {
   taskDetails.value = "";
 }
 
-function closeUpdateForm() {
-  updateTaskDiv.style.display = "none";
-  updateTaskHeading.value = "";
-  updateTaskDetails.value = "";
-}
-
 function confirmDeleteTask(id) {
   deleteId = id;
   checkBox.style.display = "flex";
 }
 
-checkBoxButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    if (button.value === "YES") {
-      deleteTask(deleteId);
-    } else if (button.value === "NO") {
-      deleteId = "";
-      checkBox.style.display = "none";
-    }
-  });
+document.getElementById("yesDeleteNote").addEventListener("click", () => {
+  deleteTask(deleteId);
+});
+document.getElementById("noDeleteNote").addEventListener("click", () => {
+  deleteId = "";
+  checkBox.style.display = "none";
 });
 
 async function editTask(id, heading, details) {
-  updateTaskDiv.style.display = "flex";
-  updateTaskHeading.value = heading;
-  updateTaskDetails.value = details;
-  updateTaskHeading.focus();
+  createTaskDiv.style.display = "flex";
+  taskHeading.value = heading;
+  taskDetails.value = details;
+  document.getElementById("addNoteButton").innerHTML = "Update";
+  taskHeading.focus();
   updateId = id;
 }
 
@@ -100,6 +76,16 @@ function viewTask(heading, details) {
   seeTask.style.display = "flex";
   seeTaskHeading.innerHTML = heading;
   seeTaskDeatils.innerHTML = details;
+}
+
+function handleFormSubmit(event) {
+  const operationToBePerformed =
+    document.getElementById("addNoteButton").innerHTML;
+  if (operationToBePerformed === "Save") {
+    handleOnSubmitCreate(event);
+  } else if (operationToBePerformed === "Update") {
+    handleOnSubmitUpdate(event);
+  }
 }
 
 async function performBackendOperation(path, method, bodyDetails) {
@@ -123,25 +109,27 @@ async function performBackendOperation(path, method, bodyDetails) {
       .catch((err) => {
         console.log(err);
       });
+    console.log(response);
     return response;
   }
 }
 
 async function handleOnSubmitCreate(event) {
   event.preventDefault();
-  if (taskHeading.value != "" && taskDetails.value != "") {
+  if (taskHeading.value.trim() != "" && taskDetails.value.trim() != "") {
     const bodyDetails = {
       heading: taskHeading.value,
       details: taskDetails.value,
     };
-    await performBackendOperation("add_task", "POST", bodyDetails).then(() => {
-      taskDetails.value = null;
-      taskHeading.value = null;
+    await performBackendOperation("add_note", "POST", bodyDetails).then(() => {
       createTaskDiv.style.display = "none";
-      addNoteToastMessage.style.display = "flex";
+      taskHeading.value = taskDetails.value = "";
+      toastMessageText.innerHTML = "Note added successfully";
+      toastMessage.style.display = "flex";
       setTimeout(() => {
-        addNoteToastMessage.style.display = "none";
+        toastMessage.style.display = "none";
       }, 3000);
+      createTaskDiv.style.display = "none";
       getTasks();
     });
   }
@@ -149,29 +137,29 @@ async function handleOnSubmitCreate(event) {
 
 async function handleOnSubmitUpdate(event) {
   event.preventDefault();
-  if (updateTaskHeading.value != "" && updateTaskDetails.value != "") {
+  if (taskHeading.value.trim() != "" && taskDetails.value.trim() != "") {
     const bodyDetails = {
       _id: updateId,
-      heading: updateTaskHeading.value,
-      details: updateTaskDetails.value,
+      heading: taskHeading.value,
+      details: taskDetails.value,
     };
-    await performBackendOperation("modify_task", "PUT", bodyDetails).then(
+    await performBackendOperation("modify_note", "PUT", bodyDetails).then(
       () => {
-        updateNoteToastMessage.style.display = "flex";
+        taskHeading.value = taskDetails.value = "";
+        toastMessageText.innerHTML = "Note updated successfully";
+        toastMessage.style.display = "flex";
         setTimeout(() => {
-          updateNoteToastMessage.style.display = "none";
+          toastMessage.style.display = "none";
         }, 3000);
       }
     );
-    updateTaskDiv.style.display = "none";
+    createTaskDiv.style.display = "none";
     getTasks();
-  } else {
-    alert("Heading or details is missing");
   }
 }
 
 async function getTasks() {
-  const response = await performBackendOperation("tasks", "GET", {});
+  const response = await performBackendOperation("notes", "GET", {});
   if (!response.error) {
     if (response.data.length > 0) {
       notesCount.display = "block";
@@ -205,24 +193,27 @@ getTasks();
 async function deleteTask(id) {
   checkBox.style.display = "none";
   const bodyDetails = { _id: id };
-  await performBackendOperation("delete_task", "DELETE", bodyDetails).then(
-    () => {
-      deleteNoteToastMessage.style.display = "flex";
-      setTimeout(() => {
-        deleteNoteToastMessage.style.display = "none";
-      }, 3000);
-    }
-  );
+  const response = await performBackendOperation(
+    "delete_note",
+    "DELETE",
+    bodyDetails
+  ).then(() => {
+    toastMessageText.innerHTML = "Note deleted successfully";
+    toastMessage.style.display = "flex";
+    setTimeout(() => {
+      toastMessage.style.display = "none";
+    }, 3000);
+  });
   getTasks();
 }
 
 window.viewTask = viewTask;
-window.closeView = closeView;
+window.closeNoteView = closeNoteView;
 window.editTask = editTask;
 window.handleOnSubmitCreate = handleOnSubmitCreate;
 window.handleOnSubmitUpdate = handleOnSubmitUpdate;
 window.closeCreateForm = closeCreateForm;
-window.closeUpdateForm = closeUpdateForm;
+window.handleFormSubmit = handleFormSubmit;
 window.confirmDeleteTask = confirmDeleteTask;
 window.createTask = createTask;
 window.performBackendOperation = performBackendOperation;

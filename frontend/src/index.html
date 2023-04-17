@@ -20,27 +20,11 @@
     </div>
 
     <div
-      id="addNoteToastMessage"
-      class="add-note-toast-message flex-row gap-3 justify-content-center align-items-center"
+      id="toastMessage"
+      class="toast-message flex-row gap-3 justify-content-center align-items-center"
     >
-      <p class="fs-5">New note added</p>
-      <i class="fas fa-close p-3 close fs-3"></i>
-    </div>
-
-    <div
-      id="updateNoteToastMessage"
-      class="update-note-toast-message flex-row gap-3 justify-content-center align-items-center"
-    >
-      <p class="fs-5">Note updated</p>
-      <i class="fas fa-close p-3 close fs-3"></i>
-    </div>
-
-    <div
-      id="deleteNoteToastMessage"
-      class="delete-note-toast-message flex-row gap-3 justify-content-center align-items-center"
-    >
-      <p class="fs-5">Note deleted</p>
-      <i class="fas fa-close p-3 close fs-3"></i>
+      <p class="fs-5" id="toastMessageText"></p>
+      <i class="fas fa-close close fs-3"></i>
     </div>
 
     <div
@@ -53,10 +37,20 @@
       <div
         class="d-flex flex-row justify-content-center align-items-center gap-4"
       >
-        <button class="yes-delete-button check-box-button" value="YES">
+        <button
+          class="yes-delete-button check-box-button"
+          id="yesDeleteNote"
+          value="YES"
+        >
           YES
         </button>
-        <button class="no-delete-button check-box-button" value="NO">NO</button>
+        <button
+          class="no-delete-button check-box-button"
+          id="noDeleteNote"
+          value="NO"
+        >
+          NO
+        </button>
       </div>
     </div>
 
@@ -64,10 +58,12 @@
       class="container-fluid notes-body flex-column justify-content-center align-items-center position-relative"
     >
       <h1 id="notesHeading" class="p-4 display-1 notes-heading">My Notes</h1>
+
       <p id="notesSubHeading"></p>
+
       <div id="viewTask" class="view-task position-absolute p-2 flex-column">
         <div
-          onclick="closeView()"
+          onclick="closeNoteView()"
           class="close-button position-absolute top-0 end-0"
         >
           <i class="fa-sharp fa-solid fa-square-xmark fs-1 p-2"></i>
@@ -87,7 +83,7 @@
           <i class="fa-sharp fa-solid fa-square-xmark fs-1 p-2"></i>
         </div>
         <form
-          onsubmit="handleOnSubmitCreate(event)"
+          onsubmit=" handleFormSubmit(event)"
           class="d-flex flex-column align-items-center w-100"
         >
           <div
@@ -109,48 +105,6 @@
           </div>
           <button id="addNoteButton" class="form-button" type="submit">
             Save
-          </button>
-        </form>
-        <button class="clear-note-button m-2 bg-danger" type="text">
-          Clear
-        </button>
-      </div>
-
-      <div
-        id="updateTask"
-        class="update-task position-absolute p-2 flex-column justify-content-center align-items-center"
-      >
-        <div
-          onclick="closeUpdateForm()"
-          class="close-button position-absolute top-0 end-0"
-        >
-          <i class="fa-sharp fa-solid fa-square-xmark fs-1 p-2"></i>
-        </div>
-        <form
-          onsubmit="handleOnSubmitUpdate(event)"
-          class="d-flex flex-column align-items-center w-100"
-        >
-          <h2>Update Note</h2>
-          <div
-            class="p-2 m-2 d-flex flex-column justify-content-center align-items-center gap-3 w-100"
-          >
-            <input
-              id="updateTaskHeading"
-              type="text"
-              class="w-100 text-center"
-              placeholder="
-              Heading..."
-            />
-            <textarea
-              id="updateTaskDetails"
-              class="w-100"
-              type="text"
-              placeholder="
-              Type your note here..."
-            ></textarea>
-          </div>
-          <button id="updateNoteButton" class="form-button" type="submit">
-            Update
           </button>
         </form>
         <button class="clear-note-button m-2 bg-danger" type="text">

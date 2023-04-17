@@ -165,9 +165,7 @@ body {
   overflow: auto;
 }
 
-.add-note-toast-message,
-.update-note-toast-message,
-.delete-note-toast-message {
+.toast-message {
   display: none;
   z-index: 1;
   background-color: #00f5d4;
@@ -181,7 +179,7 @@ body {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
   cursor: pointer;
-  animation: slideIn 1s ease-in;
+  animation: slideIn 0.5s ease-in;
 }
 
 @keyframes slideIn {
@@ -194,10 +192,8 @@ body {
   }
 }
 
-.add-note-toast-message > p,
-.update-note-toast-message > p,
-.delete-note-toast-message > p {
-  padding: 0.75rem 0 0 0;
+.toast-message > p {
+  padding: 1rem 0 0 0;
 }
 
 .check-box {
@@ -261,9 +257,7 @@ body {
 }
 
 @media screen and (min-width: 900px) {
-  .add-note-toast-message,
-  .update-note-toast-message,
-  .delete-note-toast-message {
+  .toast-message {
     left: 70%;
     width: 20vw;
     animation: slideIn 1s ease-in;
