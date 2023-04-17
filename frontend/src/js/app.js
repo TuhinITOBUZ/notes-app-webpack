@@ -15,6 +15,7 @@ const seeTaskDeatils = document.getElementById("viewTaskDetails");
 const closeToastMessage = document.querySelector(".close");
 const toastMessage = document.getElementById("toastMessage");
 const toastMessageText = document.getElementById("toastMessageText");
+const addNoteButton = document.getElementById("addNoteButton");
 let updateId = "";
 let deleteId = "";
 let responseMessage = "";
@@ -35,7 +36,7 @@ function setTaskBackgroundColor() {
 
 function createTask() {
   createTaskDiv.style.display = "flex";
-  document.getElementById("addNoteButton").innerHTML = "Save";
+  addNoteButton.innerHTML = "Save";
   taskDetails.focus();
 }
 
@@ -66,7 +67,7 @@ async function editTask(id, heading, details) {
   createTaskDiv.style.display = "flex";
   taskHeading.value = heading;
   taskDetails.value = details;
-  document.getElementById("addNoteButton").innerHTML = "Update";
+  addNoteButton.innerHTML = "Update";
   taskHeading.focus();
   updateId = id;
 }
@@ -78,8 +79,7 @@ function viewTask(heading, details) {
 }
 
 function handleFormSubmit(event) {
-  const operationToBePerformed =
-    document.getElementById("addNoteButton").innerHTML;
+  const operationToBePerformed = addNoteButton.innerHTML;
   if (operationToBePerformed === "Save") {
     handleOnSubmitCreate(event);
   } else if (operationToBePerformed === "Update") {
