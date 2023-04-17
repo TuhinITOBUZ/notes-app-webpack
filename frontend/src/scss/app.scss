@@ -37,10 +37,6 @@ body {
   width: 85%;
 }
 
-.notes-heading {
-  text-shadow: 2px 2px 6px rgba(128, 96, 21, 1);
-}
-
 .create-button {
   z-index: 1;
   right: 0.2rem;
@@ -67,7 +63,6 @@ body {
 }
 
 .create-task,
-.update-task,
 .view-task {
   display: none;
   z-index: 1;
@@ -80,16 +75,14 @@ body {
   backdrop-filter: blur(20px);
 }
 
-.create-task > form > div > input,
-.update-task > form > div > input {
+.create-task > form > div > input {
   border: 1px salmon double;
   border-radius: 10px;
   font-size: large;
   padding: 1rem;
 }
 
-.create-task > form > div > textarea,
-.update-task > form > div > textarea {
+.create-task > form > div > textarea {
   min-height: 50vh;
   border: 1px salmon double;
   border-radius: 10px;
@@ -98,9 +91,7 @@ body {
 }
 
 .create-task > form button,
-.update-task > form button,
-.create-task button,
-.update-task button {
+.create-task button {
   outline: none;
   cursor: pointer;
   font-weight: 600;
@@ -114,9 +105,7 @@ body {
 }
 
 .create-task > form button:hover,
-.update-task > form button:hover,
-.create-task button:hover,
-.update-task button:hover {
+.create-task button:hover {
   transition: all 0.2s ease;
   background: #ccd5ae;
   scale: 1.1;
@@ -125,7 +114,7 @@ body {
 .task {
   border: 1px solid black;
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1.5rem;
   min-width: 15rem;
   min-height: 7rem;
   transition: all 0.3s ease-in-out;
@@ -133,6 +122,7 @@ body {
 
 .task > h2 {
   font-family: "Roboto", sans-serif;
+  font-size: 3rem;
 }
 
 .task > p {
@@ -141,6 +131,7 @@ body {
   overflow: auto;
   text-align: justify;
   font-family: "Crimson Text", serif;
+  font-size: 1rem !important;
 }
 
 .task:hover {
@@ -148,10 +139,6 @@ body {
   box-shadow: inset 200px 0 0 0 #54b3d6;
   cursor: pointer;
   border: none;
-}
-
-.task-list:hover > .task:not(:hover) {
-  opacity: 0.5;
 }
 
 .delete-button:hover,

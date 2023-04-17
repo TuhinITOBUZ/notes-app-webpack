@@ -37,20 +37,8 @@
       <div
         class="d-flex flex-row justify-content-center align-items-center gap-4"
       >
-        <button
-          class="yes-delete-button check-box-button"
-          id="yesDeleteNote"
-          value="YES"
-        >
-          YES
-        </button>
-        <button
-          class="no-delete-button check-box-button"
-          id="noDeleteNote"
-          value="NO"
-        >
-          NO
-        </button>
+        <button id="yesDeleteNote" value="YES">YES</button>
+        <button id="noDeleteNote" value="NO">NO</button>
       </div>
     </div>
 
@@ -61,15 +49,22 @@
 
       <p id="notesSubHeading"></p>
 
-      <div id="viewTask" class="view-task position-absolute p-2 flex-column">
+      <div
+        id="viewTask"
+        class="view-task position-absolute p-2 flex-column align-items-center"
+      >
         <div
           onclick="closeNoteView()"
           class="close-button position-absolute top-0 end-0"
         >
           <i class="fa-sharp fa-solid fa-square-xmark fs-1 p-2"></i>
         </div>
-        <h2 id="viewTaskHeading" class="p-4 overflow-auto text-center"></h2>
-        <p id="viewTaskDetails" class="p-4 overflow-auto text-center"></p>
+        <h2
+          id="viewTaskHeading"
+          class="p-4 overflow-auto text-center display-1"
+        ></h2>
+        <hr class="w-75" />
+        <p id="viewTaskDetails" class="p-4 overflow-auto text-center fs-4"></p>
       </div>
 
       <div

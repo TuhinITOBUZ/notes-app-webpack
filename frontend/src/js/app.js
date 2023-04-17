@@ -7,7 +7,7 @@ const taskList = document.getElementById("taskList");
 const createTaskDiv = document.getElementById("createTask");
 const colorArray = ["#ccd5ae", "#e9edc9", "#faedcd", "#d4a373"];
 const notesCount = document.getElementById("notesSubHeading");
-const clearButtons = document.querySelectorAll(".clear-note-button");
+const clearButton = document.querySelector(".clear-note-button");
 const checkBox = document.getElementById("checkBox");
 const seeTask = document.getElementById("viewTask");
 const seeTaskHeading = document.getElementById("viewTaskHeading");
@@ -17,15 +17,14 @@ const toastMessage = document.getElementById("toastMessage");
 const toastMessageText = document.getElementById("toastMessageText");
 let updateId = "";
 let deleteId = "";
+let responseMessage = "";
 
 closeToastMessage.addEventListener("click", () => {
   toastMessage.style.display = "none";
 });
 
-clearButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    taskHeading.value = taskDetails.value = "";
-  });
+clearButton.addEventListener("click", () => {
+  taskHeading.value = taskDetails.value = "";
 });
 
 function setTaskBackgroundColor() {
@@ -109,7 +108,7 @@ async function performBackendOperation(path, method, bodyDetails) {
       .catch((err) => {
         console.log(err);
       });
-    console.log(response);
+    responseMessage = response.message;
     return response;
   }
 }
@@ -124,7 +123,7 @@ async function handleOnSubmitCreate(event) {
     await performBackendOperation("add_note", "POST", bodyDetails).then(() => {
       createTaskDiv.style.display = "none";
       taskHeading.value = taskDetails.value = "";
-      toastMessageText.innerHTML = "Note added successfully";
+      toastMessageText.innerHTML = responseMessage;
       toastMessage.style.display = "flex";
       setTimeout(() => {
         toastMessage.style.display = "none";
@@ -146,7 +145,7 @@ async function handleOnSubmitUpdate(event) {
     await performBackendOperation("modify_note", "PUT", bodyDetails).then(
       () => {
         taskHeading.value = taskDetails.value = "";
-        toastMessageText.innerHTML = "Note updated successfully";
+        toastMessageText.innerHTML = responseMessage;
         toastMessage.style.display = "flex";
         setTimeout(() => {
           toastMessage.style.display = "none";
@@ -171,7 +170,7 @@ async function getTasks() {
     taskList.innerHTML = "";
     for (let i = 0; i < response.data.length; i++) {
       let task = `
-      <div class="task p-2 position-relative">
+      <div class="task position-relative">
       <h2 class="w-75 overflow-auto">${response.data[i].heading}</h2>
       <p class="width-85">${response.data[i].details}</p>
       <div class="position-absolute top-0 end-0 d-flex flex-column gap-2 p-1">
@@ -180,7 +179,7 @@ async function getTasks() {
         <button onclick="confirmDeleteTask('${response.data[i]._id}')" class="delete-button border-0 bg-transparent"><i class="fa-solid fa-trash"></i></button>
       </div>
       <hr>
-      <p class="last-updated-on">Updated on :${response.data[i].date}</p>
+      <p class="last-updated-on">${response.data[i].date}</p>
       </div>
       `;
       taskList.innerHTML += task;
@@ -198,7 +197,7 @@ async function deleteTask(id) {
     "DELETE",
     bodyDetails
   ).then(() => {
-    toastMessageText.innerHTML = "Note deleted successfully";
+    toastMessageText.innerHTML = responseMessage;
     toastMessage.style.display = "flex";
     setTimeout(() => {
       toastMessage.style.display = "none";
@@ -210,8 +209,6 @@ async function deleteTask(id) {
 window.viewTask = viewTask;
 window.closeNoteView = closeNoteView;
 window.editTask = editTask;
-window.handleOnSubmitCreate = handleOnSubmitCreate;
-window.handleOnSubmitUpdate = handleOnSubmitUpdate;
 window.closeCreateForm = closeCreateForm;
 window.handleFormSubmit = handleFormSubmit;
 window.confirmDeleteTask = confirmDeleteTask;
